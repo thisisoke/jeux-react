@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { Login } from './screen/Login.jsx';
 
-import { Formick } from './component/LoginForm/formick.jsx';
+import { Basic } from './component/LoginForm/basic.jsx';
 
 
 export function App() {
@@ -15,7 +15,7 @@ export function App() {
    <Router>
      
      <Switch>
-       <Route path="/" exact component={Formick}/>
+       <Route path="/" exact component={Basic}/>
       
      </Switch>
 
