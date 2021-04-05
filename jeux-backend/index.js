@@ -5,6 +5,7 @@ const mongoose= require('mongoose');
 
 //Import Routes
 const authRoute= require('./routes/auth');
+const postRoute= require('./routes/post');
 
 //DB config
 dotenv.config();
@@ -19,5 +20,6 @@ app.use(express.json());
 
 //Route Middlweares
 app.use('/api/user', authRoute);
+app.use('/api/posts', postRoute);
 
 app.listen(2000, () => console.log('jeux server is up and running'));
