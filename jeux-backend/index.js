@@ -3,16 +3,21 @@ const app = express();
 const dotenv = require('dotenv');
 const mongoose= require('mongoose');
 
-//connect to DB
-dotenv.config();
-
-mongoose.connect( process.env.DB_CONNECT , { useNewUrlParser: true }, () => console.log('connected to db'))
-
- //Import Routes
+//Import Routes
 const authRoute= require('./routes/auth');
 
-//Route Middlweares
+//DB config
+dotenv.config();
+//connect to DB
+mongoose.connect( process.env.DB_CONNECT , { useNewUrlParser: true }, () => console.log('connected to db!'))
 
+
+//Middleware
+app.use(express.json());
+
+
+
+//Route Middlweares
 app.use('/api/user', authRoute);
 
 app.listen(2000, () => console.log('jeux server is up and running'));
