@@ -1,22 +1,21 @@
 const router = require('express').Router();
-
 const User = require('../model/User');
+const {registerValidation} = require('../validation');
 
-//Validation
-const Joi = require('@hapi/joi');
-const validSchema = Joi.object({
-    name: Joi.string().min(6).required(),
-    email: Joi.string().min(6).required().email(),
-    password: Joi.string().min(6).required()
-});
+
 
 
 router.post('/register', async (req,res) => {
 
     //Validating Data from User Before User is made
-    const {error} = validSchema.validate(req.body);
+    const {error} = registerValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
+
+    //Check if The user is already in the Database
+    const emailExist = await User.findOne({email: req.body.email});
+    if(emailExist) return res.status(400).send('Email already exisits')
    
+    //Create a new User
     const user = new User({
         name: req.body.name,
         email: req.body.email,
