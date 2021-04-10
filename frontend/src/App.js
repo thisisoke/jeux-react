@@ -3,8 +3,11 @@ import './App.css';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { Login } from './screen/Login.jsx';
+import { Home } from './screen/Home.jsx';
+import { Register } from './screen/Register.jsx';
+import { Lobby } from './screen/Lobby.jsx';
 
-import { Basic } from './component/LoginForm/basic.jsx';
+
 
 
 export function App() {
@@ -15,7 +18,10 @@ export function App() {
    <Router>
      
      <Switch>
-       <Route path="/" exact component={Basic}/>
+       <Route path="/" exact component={Home}/>
+       <Route path="/login" exact component={Login}/>
+       <Route path="/register" exact component={Register}/>
+       <Route path="/lobby" exact component={Lobby}/>
       
      </Switch>
 

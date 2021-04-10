@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import "./LoginForm.css";
+import axios from 'axios';
+import { useHistory } from "react-router-dom"
 
-export const Formick = ()=> {
+export const RegisterForm = ()=> {
+
+    const history = useHistory(); //for navigation
 
     const validate = values =>{
 
@@ -20,13 +24,28 @@ export const Formick = ()=> {
     const formik = useFormik({
 
         initialValues:{
-            email:'',
-            password: '',
-            repassword: ''
+            name:'',
+            email: '',
+            password: ''
         },
         validate,
         onSubmit: values =>{
-            alert(JSON.stringify(values, null, 2))
+
+            
+            //alert(JSON.stringify(values, null, 2))
+            //const sendData= JSON.stringify(values, null, 2)
+
+            // Post data from a url endpoint
+            axios.post("http://localhost:2000/api/user/register", values)
+            .then(res => {
+            console.log(res);
+            console.log(res.data);
+            });
+            
+            history.push('/Lobby');
+
+                
+            
         }
     })
 
@@ -35,17 +54,19 @@ export const Formick = ()=> {
         <div>
             <h1>Register</h1>
             <form onSubmit={formik.handleSubmit}>
+
+                <label htmlFor="email">Name</label>
+                <input onChange={formik.handleChange} VALUE={formik.values.name}  onBlur={formik.handleBlur} id='name' name='name' />
                 <label htmlFor="email">Email Address</label>
                 <input onChange={formik.handleChange} VALUE={formik.values.email}  onBlur={formik.handleBlur} id='email' name='email' />
                 {formik.touched.email && formik.errors.email? <div>{formik.errors.email}</div> : null}
                 <label htmlFor="password">Password</label>
                 <input type='password' onChange={formik.handleChange} VALUE={formik.values.password} id='password' name='password' />
-                <label htmlFor="repassword">Password Again</label>
-                <input type='password' onChange={formik.handleChange} VALUE={formik.values.repassword}id='repassword' name='repassword' />
+            
 
                 <label for="cars">Choose a car:</label>
 
-                <button type="submit">Enter Room</button>
+                <button type="submit">Create Account</button>
             </form>
         </div>
 
